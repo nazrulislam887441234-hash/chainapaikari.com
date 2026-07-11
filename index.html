@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>chainapaikari.com - শীঘ্রই আসছে</title>
+<meta name="description" content="chainapaikari.com - চায়না পাইকারি গ্যাজেট, কাপড়, ইলেকট্রনিক্স। সবচেয়ে কম দামে সব ধরনের প্রোডাক্ট।">
+
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --primary: #00f2ff;
+    --secondary: #7c3aed;
+    --accent: #ff00e5;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Hind Siliguri',sans-serif;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:#0a0f1e;
+    overflow:hidden;
+    position:relative;
+}
+
+/* Animated Gradient Background */
+.bg-gradient{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background: radial-gradient(ellipse at top, #1e3a8a 0%, #0a0f1e 70%);
+    z-index:0;
+}
+
+.bg-gradient::before,
+.bg-gradient::after{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    filter:blur(140px);
+    animation:float 15s infinite ease-in-out alternate;
+}
+
+.bg-gradient::before{
+    background:var(--primary);
+    top:10%;
+    left:5%;
+}
+
+.bg-gradient::after{
+    background:var(--secondary);
+    bottom:10%;
+    right:5%;
+    animation-delay:2s;
+}
+
+@keyframes float{
+    0%{transform:translate(0,0) scale(1);}
+    100%{transform:translate(60px,-40px) scale(1.2);}
+}
+
+/* Grid Pattern */
+.grid{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-image: 
+        linear-gradient(rgba(0,242,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,242,255,.08) 1px, transparent 1px);
+    background-size:50px 50px;
+    z-index:1;
+    animation:gridMove 20s linear infinite;
+}
+
+@keyframes gridMove{
+    from{background-position:0 0;}
+    to{background-position:50px 50px;}
+}
+
+.card{
+    position:relative;
+    z-index:2;
+    width:92%;
+    max-width:650px;
+    padding:50px 40px;
+    text-align:center;
+    background:rgba(15,23,42,.45);
+    backdrop-filter:blur(25px) saturate(180%);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:30px;
+    box-shadow:0 0 60px rgba(0,242,255,.25), 0 25px 80px rgba(0,0,0,.5);
+    color:#fff;
+    animation:cardIn 1s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes cardIn{
+    from{opacity:0; transform:translateY(30px) scale(.95);}
+    to{opacity:1; transform:translateY(0) scale(1);}
+}
+
+.logo{
+    width:110px;
+    height:110px;
+    margin:auto;
+    border-radius:50%;
+    background: conic-gradient(from 180deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:48px;
+    box-shadow:0 0 40px rgba(0,242,255,.6);
+    animation:logoSpin 4s linear infinite;
+    position:relative;
+}
+
+.logo::before{
+    content:"";
+    position:absolute;
+    inset:4px;
+    background:#0a0f1e;
+    border-radius:50%;
+}
+
+.logo span{
+    position:relative;
+    z-index:1;
+}
+
+@keyframes logoSpin{
+    100%{transform:rotate(360deg);}
+}
+
+.badge{
+    display:inline-block;
+    margin-top:25px;
+    padding:8px 20px;
+    background:linear-gradient(90deg, rgba(0,242,255,.15), rgba(124,58,237,.15));
+    border:1px solid rgba(0,242,255,.3);
+    border-radius:50px;
+    font-size:14px;
+    font-weight:600;
+    color:var(--primary);
+    letter-spacing:1px;
+}
+
+h1{
+    margin-top:15px;
+    font-size:40px;
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    background: linear-gradient(90deg, #fff, var(--primary), #fff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-size:200% auto;
+    animation:shine 3s linear infinite;
+}
+
+@keyframes shine{
+    to{background-position:200% center;}
+}
+
+.domain{
+    color:var(--primary);
+    font-weight:700;
+    margin:12px 0 25px;
+    font-size:26px;
+    word-break:break-word;
+    text-shadow:0 0 15px rgba(0,242,255,.5);
+}
+
+.message{
+    font-size:19px;
+    line-height:1.9;
+    opacity:.9;
+    margin-bottom:30px;
+}
+
+.message b{
+    color:var(--primary);
+}
+
+/* Progress Bar */
+.progress-wrap{
+    margin:35px 0;
+}
+
+.progress-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    opacity:.8;
+    margin-bottom:10px;
+}
+
+.progress{
+    width:100%;
+    height:12px;
+    background:rgba(255,255,255,.1);
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.15);
+}
+
+.progress-bar{
+    height:100%;
+    width:65%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+    border-radius:20px;
+    box-shadow:0 0 20px var(--primary);
+    animation:progressLoad 2.5s ease-in-out infinite;
+}
+
+@keyframes progressLoad{
+    0%,100%{width:65%;}
+    50%{width:85%;}
+}
+
+/* Notify Form */
+.notify{
+    margin-top:30px;
+}
+
+.notify p{
+    font-size:15px;
+    margin-bottom:15px;
+    opacity:.85;
+}
+
+.input-group{
+    display:flex;
+    gap:10px;
+    max-width:420px;
+    margin:auto;
+}
+
+.input-group input{
+    flex:1;
+    padding:14px 20px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    font-size:16px;
+    outline:none;
+    transition:.3s;
+}
+
+.input-group input:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 15px rgba(0,242,255,.3);
+}
+
+.input-group button{
+    padding:14px 28px;
+    border:none;
+    border-radius:12px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color:#0a0f1e;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.input-group button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(0,242,255,.4);
+}
+
+/* Social */
+.social{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    gap:18px;
+}
+
+.social a{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+    text-decoration:none;
+    color:#fff;
+    transition:.3s;
+}
+
+.social a:hover{
+    background:var(--primary);
+    color:#0a0f1e;
+    transform:translateY(-4px);
+    box-shadow:0 8px 20px rgba(0,242,255,.4);
+}
+
+.footer{
+    margin-top:35px;
+    font-size:14px;
+    opacity:.7;
+}
+
+@media(max-width:600px){
+    .card{padding:35px 25px;}
+    h1{font-size:30px;}
+    .domain{font-size:20px;}
+    .input-group{flex-direction:column;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="grid"></div>
+
+<div class="card">
+
+<div class="logo"><span>🌐</span></div>
+
+<div class="badge">PREMIUM WHOLESALE PLATFORM</div>
+
+<h1>Coming Soon</h1>
+
+<div class="domain">
+chainapaikari.com
+</div>
+
+<div class="message">
+আপনার <b>chainapaikari.com</b> ওয়েবসাইট<br>
+চায়না পাইকারি গ্যাজেট, কাপড় ও ইলেকট্রনিক্স নিয়ে<br>
+উন্নত ফিচার সহ ডেভেলপমেন্টে রয়েছে।
+</div>
+
+<div class="progress-wrap">
+    <div class="progress-label">
+        <span>Development Progress</span>
+        <span>65%</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar"></div>
+    </div>
+</div>
+
+<div class="notify">
+    <p>🚀 লঞ্চের আপডেট সবার আগে পেতে ইমেইল দিন</p>
+    <div class="input-group">
+        <input type="email" placeholder="আপনার ইমেইল লিখুন">
+        <button>Notify Me</button>
+    </div>
+</div>
+
+<div class="social">
+    <a href="#">f</a>
+    <a href="#">in</a>
+    <a href="#">ig</a>
+    <a href="#">yt</a>
+</div>
+
+<div class="footer">
+    © 2026 chainapaikari.com | আমরা খুব শীঘ্রই নতুন ডিজাইন ও প্রিমিয়াম সার্ভিস নিয়ে ফিরছি
+</div>
+
+</div>
+
+<script>
+// Simple email validation
+document.querySelector('.input-group button').addEventListener('click', function(){
+    const email = document.querySelector('.input-group input').value;
+    if(email.includes('@')){
+        alert('ধন্যবাদ! লঞ্চের সময় আপনাকে জানিয়ে দেওয়া হবে।');
+        document.querySelector('.input-group input').value = '';
+    }else{
+        alert('সঠিক ইমেইল দিন।');
+    }
+});
+</script>
+
+</body>
+</html>
