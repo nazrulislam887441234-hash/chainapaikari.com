@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>404 - পেজ পাওয়া যায়নি | chainapaikari.com</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --warning: #ffb800;
+    --primary: #00f2ff;
+    --dark: #0a0f1e;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Hind Siliguri',sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background: radial-gradient(ellipse at center, #3a1e8b 0%, #0a0f1e 100%);
+    padding:15px;
+}
+
+/* Background Glow */
+.bg-orb{
+    position:absolute;
+    width:80vw;
+    height:80vw;
+    max-width:600px;
+    max-height:600px;
+    background: radial-gradient(circle, rgba(255,184,0,.2) 0%, transparent 70%);
+    filter:blur(80px);
+    animation:pulseBg 4s ease-in-out infinite;
+}
+
+@keyframes pulseBg{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+}
+
+/* Floating Stars */
+.stars{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    z-index:1;
+}
+
+.star{
+    position:absolute;
+    color:#ffb800;
+    animation:floatStar 8s linear infinite;
+    opacity:0;
+}
+
+@keyframes floatStar{
+    0%{
+        transform:translateY(100vh) rotate(0deg);
+        opacity:0;
+    }
+    10%{opacity:1;}
+    90%{opacity:1;}
+    100%{
+        transform:translateY(-20vh) rotate(720deg);
+        opacity:0;
+    }
+}
+
+.card{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:550px;
+    padding:clamp(30px, 7vw, 50px) clamp(20px, 5vw, 35px);
+    text-align:center;
+    background:rgba(15,23,42,.6);
+    backdrop-filter:blur(30px) saturate(180%);
+    -webkit-backdrop-filter:blur(30px) saturate(180%);
+    border:1px solid rgba(255,184,0,.3);
+    border-radius:clamp(20px, 5vw, 30px);
+    box-shadow:0 0 60px rgba(255,184,0,.25), 0 25px 80px rgba(0,0,0,.5);
+    color:#fff;
+    animation:cardPop .8s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes cardPop{
+    from{opacity:0; transform:scale(.8) translateY(30px);}
+    to{opacity:1; transform:scale(1) translateY(0);}
+}
+
+/* 404 Number */
+.error-404{
+    font-size:clamp(80px, 20vw, 120px);
+    font-family:'Poppins',sans-serif;
+    font-weight:900;
+    background: linear-gradient(90deg, var(--warning), var(--primary), var(--warning));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-size:200% auto;
+    animation:shine 3s linear infinite, bounce 2s ease-in-out infinite;
+    line-height:1;
+}
+
+@keyframes shine{
+    to{background-position:200% center;}
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+}
+
+/* Lost Box Icon */
+.icon-wrapper{
+    font-size:clamp(50px, 12vw, 70px);
+    margin:15px 0;
+    animation:shake 2s ease-in-out infinite;
+}
+
+@keyframes shake{
+    0%,100%{transform:rotate(0deg);}
+    25%{transform:rotate(-10deg);}
+    75%{transform:rotate(10deg);}
+}
+
+h1{
+    font-size:clamp(22px, 6vw, 28px);
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+.message{
+    font-size:clamp(15px, 4vw, 17px);
+    line-height:1.8;
+    opacity:.85;
+    margin-bottom:30px;
+}
+
+.message b{
+    color:var(--warning);
+}
+
+/* Buttons */
+.btn-group{
+    display:flex;
+    gap:12px;
+    flex-direction:column;
+    align-items:center;
+}
+
+.btn{
+    display:inline-block;
+    padding:clamp(14px, 3.5vw, 16px) clamp(30px, 8vw, 40px);
+    color:#0a0f1e;
+    font-size:clamp(16px, 4.5vw, 18px);
+    font-weight:700;
+    text-decoration:none;
+    border-radius:15px;
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+    width:100%;
+    max-width:280px;
+}
+
+.btn-primary{
+    background: linear-gradient(90deg, var(--warning), var(--primary));
+    box-shadow:0 8px 25px rgba(255,184,0,.4);
+}
+
+.btn-secondary{
+    background: rgba(255,255,255,.1);
+    color:#fff;
+    border:1px solid rgba(255,255,255,.2);
+}
+
+.btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+    transition:.5s;
+}
+
+.btn:active::before,
+.btn:hover::before{
+    left:100%;
+}
+
+.btn:active,
+.btn:hover{
+    transform:translateY(-3px) scale(1.02);
+}
+
+.btn-primary:hover{
+    box-shadow:0 15px 35px rgba(255,184,0,.6);
+}
+
+.footer-note{
+    margin-top:20px;
+    font-size:clamp(12px, 3.5vw, 14px);
+    opacity:.7;
+}
+
+@media(min-width:500px){
+    .btn-group{
+        flex-direction:row;
+        justify-content:center;
+    }
+    .btn{width:auto;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-orb"></div>
+<div class="stars" id="stars"></div>
+
+<div class="card">
+
+<div class="error-404">404</div>
+
+<div class="icon-wrapper">📦🚀</div>
+
+<h1>উফ! পেজটি হারিয়ে গেছে</h1>
+
+<div class="message">
+    আপনি যে <b>পেজটি খুঁজছেন</b> সেটি খুঁজে পাওয়া যায়নি।<br>
+    লিংকটি ভুল হতে পারে অথবা পেজটি সরিয়ে ফেলা হয়েছে।
+</div>
+
+<div class="btn-group">
+    <a href="https://chainapaikari.com" class="btn btn-primary">হোমে ফিরে যান →</a>
+    <a href="https://chainapaikari.com/contact" class="btn btn-secondary">সাপোর্টে যোগাযোগ করুন</a>
+</div>
+
+<div class="footer-note">
+    সমস্যা হলে সাপোর্টে যোগাযোগ করুন
+</div>
+
+</div>
+
+<script>
+// Floating Stars
+const starsContainer = document.getElementById('stars');
+const starSymbols = ['⭐', '✨', '🌟', '💫'];
+
+function createStar(){
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.innerText = starSymbols[Math.floor(Math.random() * starSymbols.length)];
+    star.style.left = Math.random() * 100 + '%';
+    star.style.fontSize = (16 + Math.random() * 16) + 'px';
+    star.style.animationDuration = (5 + Math.random() * 4) + 's';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    starsContainer.appendChild(star);
+    
+    setTimeout(() => star.remove(), 9000);
+}
+
+// Create stars every 600ms
+setInterval(createStar, 600);
+
+// Prevent zoom on double tap for iOS
+document.addEventListener('gesturestart', function (e) {
+    e.preventDefault();
+});
+</script>
+
+</body>
+</html>
