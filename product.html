@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>লোড হচ্ছে...</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#00c8ff;--accent:#00ff88;--danger:#ef4444;--text:#0a0f1e;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;}
+body{background:#f0f9ff;min-height:100vh;padding-bottom:100px;}
+.card{max-width:900px;margin:20px auto;background:#fff;border-radius:25px;padding:20px;box-shadow:0 10px 40px rgba(0,200,255,.15);}
+.slider{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:1/1;background:#f1f5f9;}
+.slider img{width:100%;height:100%;object-fit:cover;}
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.4);color:#fff;border:none;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:20px;}
+.prev{left:10px;}.next{right:10px;}
+.dots{text-align:center;margin-top:10px;}
+.dot{height:8px;width:8px;margin:0 4px;background:#cbd5e1;border-radius:50%;display:inline-block;cursor:pointer;}
+.dot.active{background:var(--primary);}
+.product-name{font-family:'Poppins';font-size:26px;margin:20px 0 10px;color:var(--text);}
+.price-wrap{display:flex;align-items:center;gap:12px;margin-bottom:15px;flex-wrap:wrap;}
+.current-price{font-size:28px;font-weight:700;color:var(--accent);}
+.old-price{font-size:18px;color:#94a3b8;text-decoration:line-through;}
+.discount-badge{background:var(--danger);color:#fff;padding:4px 10px;border-radius:8px;font-weight:700;font-size:13px;}
+.desc{color:#475569;line-height:1.7;margin:20px 0;white-space:pre-line;}
+.qty-box{display:flex;justify-content:center;align-items:center;gap:15px;margin:20px 0;}
+.qty-box button{width:40px;height:40px;border:none;border-radius:10px;background:#e0f7ff;font-size:22px;font-weight:bold;cursor:pointer;color:var(--primary);}
+.qty-box span{font-size:22px;font-weight:700;min-width:30px;text-align:center;}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:15px 20px;display:flex;gap:12px;box-shadow:0 -5px 20px rgba(0,0,0,.1);}
+.btn{flex:1;padding:16px;border-radius:15px;border:none;font-weight:700;font-size:16px;cursor:pointer;}
+.btn-cart{background:#e0f7ff;color:var(--primary);}
+.btn-buy{background:linear-gradient(90deg,var(--primary),var(--accent));color:#fff;}
+.popup{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:999;}
+.popup-box{background:#fff;padding:30px;border-radius:20px;text-align:center;max-width:350px;}
+.popup-box h3{margin-bottom:15px;}
+.popup-box button{padding:12px 25px;border:none;border-radius:10px;font-weight:700;cursor:pointer;margin:5px;}
+.loading{text-align:center;padding:50px;font-weight:700;color:var(--primary);}
+</style>
+</head>
+<body>
+
+<div class="card" id="productCard" style="display:none;">
+    <div class="slider">
+        <img id="productImg" src="">
+        <button class="slider-btn prev" onclick="changeSlide(-1)">❮</button>
+        <button class="slider-btn next" onclick="changeSlide(1)">❯</button>
+    </div>
+    <div class="dots" id="dots"></div>
+
+    <h1 class="product-name" id="productName"></h1>
+
+    <div class="price-wrap">
+        <span class="current-price" id="currentPrice"></span>
+        <span class="old-price" id="oldPrice"></span>
+        <span class="discount-badge" id="discount"></span>
+    </div>
+
+    <!-- Qty Box - একবারই -->
+    <div class="qty-box">
+        <button onclick="changeQty(-1)">−</button>
+        <span id="qty">1</span>
+        <button onclick="changeQty(1)">+</button>
+    </div>
+
+    <p class="desc" id="productDesc"></p>
+</div>
+
+<div class="loading" id="loading">লোড হচ্ছে...</div>
+
+<div class="bottom-bar">
+    <button class="btn btn-cart" onclick="addToCart()">🛒 Add to Cart</button>
+    <button class="btn btn-buy" onclick="checkoutNow()">⚡ Checkout</button>
+</div>
+
+<div class="popup" id="popup">
+    <div class="popup-box">
+        <h3 id="popupTitle"></h3>
+        <p id="popupMsg"></p>
+        <button style="background:#e2e8f0;" onclick="closePopup()">বন্ধ করুন</button>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// FIX 5: Firebase Config
+const firebaseConfig = {apiKey:"AIzaSyA5q-gEWhHbBB_kn0ZDNPYXC2urpSbpPd8",authDomain:"chaina-paikari.firebaseapp.com",projectId:"chaina-paikari",storageBucket:"chaina-paikari.firebasestorage.app",messagingSenderId:"968909884753",appId:"1:968909884753:web:88ab6754c2edda39bb1770"};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let product = {};
+let currentSlide = 0;
+let images = [];
+let qty = 1;
+
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get('id');
+
+// Quantity Change
+window.changeQty = function(change){
+    qty += change;
+    if(qty < 1){ qty = 1; }
+    document.getElementById("qty").innerText = qty;
+}
+
+async function loadProduct(){
+    if(!productId) return;
+
+    const snap = await getDoc(doc(db, "products", productId));
+
+    if(snap.exists()){
+
+        product = {id: snap.id, ...snap.data()};
+        images = product.images || [product.image];
+
+        // Product Name
+        document.getElementById("productName").innerText = product.name;
+
+        // Browser Title
+        document.title = product.name;
+
+        // Price & Description
+        document.getElementById("currentPrice").innerText = product.currentPrice + " ৳";
+        document.getElementById("productDesc").innerText = product.description;
+
+        if(product.oldPrice && product.oldPrice > product.currentPrice){
+            document.getElementById("oldPrice").innerText = product.oldPrice + " ৳";
+
+            let discount = Math.round(
+                ((Number(product.oldPrice) - Number(product.currentPrice)) /
+                Number(product.oldPrice)) * 100
+            );
+
+            document.getElementById("discount").innerText = discount + "% OFF";
+        }else{
+            document.getElementById("oldPrice").style.display = "none";
+            document.getElementById("discount").style.display = "none";
+        }
+
+        showSlide(0);
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("productCard").style.display = "block";
+
+    }else{
+        document.getElementById("loading").innerText = "পণ্য পাওয়া যায়নি";
+    }
+}
+
+loadProduct();
+window.showSlide = function(i){
+    currentSlide = (i + images.length) % images.length;
+    document.getElementById("productImg").src = images[currentSlide];
+    document.getElementById("dots").innerHTML =
+        images.map((_,idx)=>
+        `<span class="dot ${idx==currentSlide?'active':''}"
+        onclick="showSlide(${idx})"></span>`).join('');
+}
+window.changeSlide = (n) => showSlide(currentSlide + n);
+
+// FIX 4: checkoutNow একবারই
+window.addToCart = function(){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let item = cart.find(i => i.id == product.id);
+    if(item){
+        item.qty += qty;
+    }else{
+        cart.push({
+           ...product,
+            price: Number(product.currentPrice), // checkout এর জন্য
+            qty: qty
+        });
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    showPopup("সফল!", "✅ কার্টে যোগ হয়েছে");
+}
+
+window.checkoutNow = function(){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let item = cart.find(i => i.id == product.id);
+    if(item){
+        item.qty += qty;
+    }else{
+        cart.push({
+           ...product,
+            price: Number(product.currentPrice),
+            qty: qty
+        });
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    window.location.href = "checkout.html";
+}
+
+function showPopup(title, msg){
+    document.getElementById('popupTitle').innerText = title;
+    document.getElementById('popupMsg').innerText = msg;
+    document.getElementById('popup').style.display = 'flex';
+}
+window.closePopup = () => document.getElementById('popup').style.display = 'none';
+</script>
+</body>
+</html>
