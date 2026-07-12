@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout - chainapaikari</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#00c8ff;--accent:#00ff88;--danger:#ef4444;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri';}
+body{background:#f0f9ff;padding:20px;}
+.container{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:20px;}
+.card{background:#fff;border-radius:20px;padding:25px;box-shadow:0 10px 40px rgba(0,200,255,.15);}
+h2{margin-bottom:20px;font-size:22px;}
+.cart-item{display:flex;gap:12px;margin-bottom:15px;padding-bottom:15px;border-bottom:1px solid #f1f5f9;}
+.cart-item img{width:70px;height:70px;border-radius:10px;object-fit:cover;}
+.cart-info{flex:1;}
+.cart-info h4{font-size:15px;margin-bottom:4px;}
+.cart-info p{color:#00ff88;font-weight:700;}
+.summary-row{display:flex;justify-content:space-between;font-size:16px;margin:8px 0;}
+.total-row{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-top:15px;padding-top:15px;border-top:2px solid #e2e8f0;}
+input,textarea,select{width:100%;padding:14px;margin-top:8px;border-radius:12px;border:2px solid #e2e8f0;font-size:15px;}
+label{font-weight:600;margin-top:12px;display:block;}
+.btn{width:100%;padding:16px;margin-top:20px;background:linear-gradient(90deg,var(--primary),var(--accent));border:none;border-radius:15px;color:#fff;font-weight:700;font-size:17px;cursor:pointer;}
+.btn:disabled{background:#cbd5e1;cursor:not-allowed;}
+.btn-cancel{background:#f1f5f9;color:#475569;margin-top:10px;}
+
+/* Popup */
+.popup{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999;animation:fadeIn .3s;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.popup-box{background:#fff;padding:30px;border-radius:20px;text-align:center;max-width:400px;width:90%;transform:scale(.9);animation:scaleUp .3s forwards;}
+@keyframes scaleUp{to{transform:scale(1);}}
+.popup-box h3{margin-bottom:10px;font-size:22px;}
+.popup-box p{color:#64748b;margin-bottom:20px;}
+.popup-icon{font-size:50px;margin-bottom:15px;}
+.order-id{background:#f0f9ff;padding:12px;border-radius:10px;font-weight:700;font-size:18px;margin:15px 0;display:flex;justify-content:space-between;align-items:center;}
+.copy-btn{background:var(--primary);color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700;}
+.popup-btn{padding:12px 25px;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-size:16px;}
+.success{color:var(--accent);} .error{color:var(--danger);}
+@media(max-width:800px){.container{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Left: Cart Summary -->
+    <div class="card">
+        <h2>🛒 আপনার অর্ডার</h2>
+        <div id="cartSummary"></div>
+        <div class="summary-row">
+            <span>পণ্যের দাম:</span>
+            <span id="subTotal">0 ৳</span>
+        </div>
+        <div class="summary-row">
+            <span>ডেলিভারি চার্জ:</span>
+            <span id="deliveryCharge">0 ৳</span>
+        </div>
+        <div class="total-row">
+            <span>সর্বমোট:</span>
+            <span id="totalAmount">0 ৳</span>
+        </div>
+    </div>
+
+    <!-- Right: Form -->
+    <div class="card">
+        <h2>🚚 ডেলিভারি তথ্য</h2>
+        <form id="orderForm">
+            <label>আপনার নাম *</label>
+            <input type="text" id="name" required>
+
+            <label>ফোন নাম্বার *</label>
+            <input type="tel" id="phone" required>
+
+            <label>বিভাগ *</label>
+            <select id="division" required>
+                <option value="">বিভাগ সিলেক্ট করুন</option>
+                <option>ঢাকা</option><option>চট্টগ্রাম</option><option>রাজশাহী</option>
+                <option>খুলনা</option><option>বরিশাল</option><option>সিলেট</option>
+                <option>রংপুর</option><option>ময়মনসিংহ</option>
+            </select>
+
+            <label>জেলা *</label>
+            <input type="text" id="district" required>
+
+            <label>থানা *</label>
+            <input type="text" id="thana" required>
+
+            <label>সম্পূর্ণ ঠিকানা *</label>
+            <textarea id="address" rows="3" required></textarea>
+
+            <label>অর্ডার নোট</label>
+            <textarea id="note" rows="2" placeholder="ঐচ্ছিক"></textarea>
+
+            <button type="submit" class="btn" id="submitBtn">Order Confirm করুন</button>
+            <button type="button" class="btn btn-cancel" onclick="goToCart()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<!-- Generic Popup -->
+<div class="popup" id="popup">
+    <div class="popup-box">
+        <div class="popup-icon" id="popupIcon"></div>
+        <h3 id="popupTitle"></h3>
+        <p id="popupMsg"></p>
+        <div id="orderIdBox" style="display:none;">
+            <div class="order-id">
+                <span id="orderIdText"></span>
+                <button class="copy-btn" onclick="copyOrderId()">Copy</button>
+            </div>
+        </div>
+        <button class="popup-btn" id="popupBtn" onclick="closePopup()">ঠিক আছে</button>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {apiKey:"AIzaSyA5q-gEWhHbBB_kn0ZDNPYXC2urpSbpPd8",authDomain:"chaina-paikari.firebaseapp.com",projectId:"chaina-paikari",storageBucket:"chaina-paikari.firebasestorage.app",messagingSenderId:"968909884753",appId:"1:968909884753:web:88ab6754c2edda39bb1770"};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let currentOrderId = '';
+let subTotal = 0;
+let deliveryCharge = 0;
+
+// Cart Load
+function loadCart(){
+    const summary = document.getElementById('cartSummary');
+    if(cart.length == 0){ 
+        showPopup('error', 'কার্ট খালি', 'আগে পণ্য কার্টে যোগ করুন', 'cart.html');
+        return; 
+    }
+    
+    subTotal = 0;
+    summary.innerHTML = '';
+    cart.forEach(item => {
+        subTotal += Number(item.price || item.currentPrice) * item.qty;
+        summary.innerHTML += `
+        <div class="cart-item">
+           <img src="${item.images?.[0] || item.image}">
+            <div class="cart-info">
+                <h4>${item.name}</h4>
+             <p>${item.price || item.currentPrice} ৳ × ${item.qty}</p>
+            </div>
+        </div>`;
+    });
+    document.getElementById('subTotal').innerText = subTotal + ' ৳';
+    calculateTotal();
+}
+loadCart();
+
+// Delivery Charge Calculate
+function calculateTotal(){
+    const division = document.getElementById('division').value;
+    deliveryCharge = (division == 'ঢাকা') ? 60 : 120;
+    if(!division) deliveryCharge = 0;
+    
+    document.getElementById('deliveryCharge').innerText = deliveryCharge + ' ৳';
+    document.getElementById('totalAmount').innerText = (subTotal + deliveryCharge) + ' ৳';
+}
+document.getElementById('division').addEventListener('change', calculateTotal);
+
+// Order ID Generate
+function generateOrderId(){
+    return 'CP' + Date.now().toString().slice(-8) + Math.floor(Math.random()*100);
+}
+
+// Form Submit
+document.getElementById('orderForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerText = "Processing...";
+
+    currentOrderId = generateOrderId();
+    let grandTotal = subTotal + deliveryCharge;
+
+    try {
+        await addDoc(collection(db, "orders"), {
+            orderId: currentOrderId,
+            guest: true,
+            name: document.getElementById('name').value,
+            phone: document.getElementById('phone').value,
+            division: document.getElementById('division').value,
+            district: document.getElementById('district').value,
+            thana: document.getElementById('thana').value,
+            address: document.getElementById('address').value,
+            note: document.getElementById('note').value,
+            items: cart,
+            subTotal: subTotal,
+            deliveryCharge: deliveryCharge,
+            total: grandTotal,
+            status: "নতুন",
+            createdAt: serverTimestamp()
+        });
+        
+        localStorage.removeItem('cart');
+        document.getElementById('orderIdText').innerText = currentOrderId;
+        document.getElementById('orderIdBox').style.display = 'block';
+        showPopup('success', 'অর্ডার সফল!', 'আপনার অর্ডারটি আমরা পেয়েছি। ট্র্যাক করার জন্য Order ID:', 'home');
+
+    } catch(err){
+        showPopup('error', 'অর্ডার ব্যর্থ', 'Error: ' + err.message, 'close');
+        btn.disabled = false;
+        btn.innerText = "Order Confirm করুন";
+    }
+}
+
+// Popup Function
+function showPopup(type, title, msg, action){
+    const popup = document.getElementById('popup');
+    document.getElementById('popupTitle').innerText = title;
+    document.getElementById('popupMsg').innerText = msg;
+    document.getElementById('popupBtn').onclick = () => handlePopupAction(action);
+    
+    if(type == 'success'){
+        document.getElementById('popupIcon').innerHTML = '✅';
+        document.getElementById('popupTitle').className = 'success';
+    } else {
+        document.getElementById('popupIcon').innerHTML = '❌';
+        document.getElementById('popupTitle').className = 'error';
+        document.getElementById('orderIdBox').style.display = 'none';
+    }
+    popup.style.display = 'flex';
+}
+
+function handlePopupAction(action){
+    if(action == 'home') window.location.href = 'index.html';
+    if(action == 'cart.html') window.location.href = 'cart.html';
+    if(action == 'close') closePopup();
+}
+
+window.closePopup = () => document.getElementById('popup').style.display = 'none';
+window.goToCart = () => window.location.href = 'cart.html';
+
+// Copy Order ID
+window.copyOrderId = () => {
+    const text = document.getElementById('orderIdText').innerText;
+    
+    // Method 1: নতুন Clipboard API
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            showPopup('success', 'Copied!', 'Order ID কপি হয়েছে: ' + text, 'close');
+        });
+    } 
+    // Method 2: পুরানো Method - সব ব্রাউজারে কাজ করবে
+    else {
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        temp.style.position = 'absolute';
+        temp.style.left = '-9999px';
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        showPopup('success', 'Copied!', 'Order ID কপি হয়েছে: ' + text, 'close');
+    }
+}
+</script>
+</body>
+</html>
