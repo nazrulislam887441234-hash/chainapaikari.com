@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>প্রাইভেসি পলিসি - chainapaikari</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+    --red:#ef4444;
+    --green:#22c55e;
+    --yellow:#fbbf24;
+    --gradient:linear-gradient(135deg,#ef4444 0%,#fbbf24 50%,#22c55e 100%);
+    --bg:#fffdf7;
+    --card:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#fef3c7;
+    --shadow:0 4px 20px rgba(239,68,68,0.08);
+    --shadow-hover:0 20px 50px rgba(239,68,68,0.15);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri';}
+body{background:var(--bg); color:var(--text);}
+
+/* Header */
+.header{
+    background:rgba(255,255,255,0.85); backdrop-filter:blur(12px);
+    padding:16px 20px; display:flex; align-items:center; gap:15px;
+    box-shadow:var(--shadow); position:sticky; top:0; z-index:100; border-bottom:3px solid transparent;
+    border-image:var(--gradient) 1;
+}
+.back-btn{font-size:24px;color:var(--red);text-decoration:none; transition:.3s;}
+.back-btn:hover{transform:translateX(-3px);}
+.page-title{font-family:'Poppins';font-size:22px;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+/* Hero */
+.hero{
+    background:var(--gradient); color:#fff; text-align:center; padding:70px 20px 90px;
+    position:relative; overflow:hidden;
+}
+.hero::after{
+    content:''; position:absolute; bottom:0; left:0; width:100%; height:50px;
+    background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120"><path fill="%23fffdf7" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,90.7C672,85,768,107,864,112C960,117,1056,107,1152,96C1248,85,1344,75,1392,69.3L1440,64L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path></svg>') no-repeat bottom;
+    background-size:cover;
+}
+.hero .icon{font-size:60px;margin-bottom:15px;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.hero h1{font-size:38px;font-weight:900;margin-bottom:10px;font-family:'Poppins';}
+.hero p{font-size:17px;opacity:0.95;max-width:600px;margin:0 auto;}
+
+.container{max-width:1000px;margin:-40px auto 60px;padding:0 20px;position:relative;z-index:2;}
+
+/* Content Box */
+.content-box{
+    background:var(--card);border-radius:24px;padding:45px;box-shadow:var(--shadow); border:1px solid var(--border);
+}
+.last-update{background:linear-gradient(90deg,#fef3c7,#dcfce7); padding:12px 20px; border-radius:12px; border-left:4px solid var(--yellow); margin-bottom:30px; font-weight:600; color:#854d0e;}
+.last-update i{color:var(--yellow); margin-right:8px;}
+
+.section{margin-bottom:35px;}
+.section h2{
+    font-size:24px;font-weight:800;margin-bottom:15px;display:flex;align-items:center;gap:12px;
+    background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.section h2 i{color:var(--red); font-size:22px; -webkit-text-fill-color:var(--red);}
+.section p, .section li{color:var(--muted); line-height:1.9; font-size:16px; margin-bottom:12px;}
+.section ul{padding-left:25px;}
+.section li::marker{color:var(--green);}
+
+.highlight-box{
+    background:linear-gradient(135deg,#fee2e2,#fef9c3,#dcfce7); border:2px solid var(--border);
+    border-radius:16px; padding:20px; margin:20px 0;
+}
+.highlight-box strong{color:var(--red);}
+
+.contact-cta{
+    background:var(--gradient); color:#fff; padding:30px; border-radius:20px; text-align:center; margin-top:40px;
+}
+.contact-cta h3{font-size:22px;margin-bottom:10px;font-family:'Poppins';}
+.contact-cta a{display:inline-block; margin-top:15px; padding:14px 30px; background:#fff; color:var(--red); 
+    border-radius:12px; text-decoration:none; font-weight:800; transition:.3s;}
+.contact-cta a:hover{transform:scale(1.05); box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+
+/* Footer */
+footer{background:var(--card);text-align:center;padding:35px 20px;color:var(--muted);font-size:14px;font-weight:600;border-top:1px solid var(--border);margin-top:60px;}
+footer a{color:var(--red);margin:0 12px;text-decoration:none;font-weight:700;}
+footer a:hover{color:var(--green);text-decoration:underline;}
+
+/* Mobile */
+@media(max-width:768px){
+    .hero{padding:50px 20px 70px;}
+    .hero h1{font-size:28px;}
+    .content-box{padding:30px 20px;}
+    .section h2{font-size:20px;}
+}
+@media(max-width:480px){
+    .header{padding:14px 16px;}
+    .hero .icon{font-size:45px;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+    <div class="page-title">chainapaikari</div>
+</div>
+
+<div class="hero">
+    <div class="icon"><i class="fa-solid fa-shield-halved"></i></div>
+    <h1>প্রাইভেসি পলিসি</h1>
+    <p>আপনার তথ্যের নিরাপত্তা আমাদের প্রথম অগ্রাধিকার</p>
+</div>
+
+<div class="container">
+    <div class="content-box">
+        
+        <div class="last-update">
+            <i class="fa-solid fa-calendar-check"></i> সর্বশেষ আপডেট: <span id="date"></span>
+        </div>
+
+        <div class="section">
+            <h2><i class="fa-solid fa-database"></i> আমরা কি তথ্য সংগ্রহ করি?</h2>
+            <p>আপনার কেনাকাটার অভিজ্ঞতা ভালো করার জন্য আমরা নিচের তথ্যগুলো সংগ্রহ করি:</p>
+            <ul>
+                <li><strong>ব্যক্তিগত তথ্য:</strong> নাম, ফোন নাম্বার, ইমেইল ঠিকানা</li>
+                <li><strong>ডেলিভারি তথ্য:</strong> ঠিকানা, থানা, জেলা</li>
+                <li><strong>অর্ডার তথ্য:</strong> কোন পণ্য কিনেছেন, পরিমাণ, মোট টাকা</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2><i class="fa-solid fa-bullseye"></i> কেন তথ্য ব্যবহার করি?</h2>
+            <ul>
+                <li>আপনার অর্ডার প্রসেস এবং ডেলিভারি করার জন্য</li>
+                <li>অর্ডার আপডেট এবং কাস্টমার সাপোর্ট দেওয়ার জন্য</li>
+                <li>ওয়েবসাইটের অভিজ্ঞতা উন্নত করার জন্য</li>
+                <li>নতুন অফার এবং প্রোডাক্ট সম্পর্কে জানানোর জন্য</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <strong><i class="fa-solid fa-lock"></i> গুরুত্বপূর্ণ:</strong> আমরা কখনোই আপনার তথ্য 3য় পক্ষের কাছে বিক্রি বা শেয়ার করি না। আপনার তথ্য শুধুমাত্র আমাদের কোম্পানির ভিতরেই সুরক্ষিত থাকবে।
+        </div>
+
+        <div class="section">
+            <h2><i class="fa-solid fa-cookie-bite"></i> কুকি ব্যবহার</h2>
+            <p>আমরা আপনার ব্রাউজিং অভিজ্ঞতা ভালো করার জন্য কুকি ব্যবহার করি। কুকি আপনার কার্ট, লগিন তথ্য মনে রাখতে সাহায্য করে। আপনি চাইলে ব্রাউজার সেটিংস থেকে কুকি বন্ধ করতে পারবেন।</p>
+        </div>
+
+        <div class="section">
+            <h2><i class="fa-solid fa-shield"></i> তথ্যের নিরাপত্তা</h2>
+            <p>আমরা Firebase এর শক্তিশালী সিকিউরিটি ব্যবহার করি। আপনার সব তথ্য এনক্রিপ্টেড অবস্থায় সংরক্ষণ করা হয়। শুধুমাত্র Admin ই তথ্য দেখতে পারবে।</p>
+        </div>
+
+        <div class="section">
+            <h2><i class="fa-solid fa-user-pen"></i> আপনার অধিকার</h2>
+            <p>আপনি চাইলে যেকোনো সময় আপনার তথ্য দেখতে, পরিবর্তন করতে বা ডিলিট করার জন্য আমাদের সাথে যোগাযোগ করতে পারেন।</p>
+        </div>
+
+        <div class="contact-cta">
+            <h3>কোনো প্রশ্ন আছে?</h3>
+            <p>প্রাইভেসি নিয়ে কোনো জিজ্ঞাসা থাকলে আমাদের সাথে যোগাযোগ করুন</p>
+            <a href="contact.html"><i class="fa-solid fa-envelope"></i> যোগাযোগ করুন</a>
+        </div>
+
+    </div>
+</div>
+
+<footer>
+    © <span id="year"></span> chainapaikari. সর্বস্বত্ব সংরক্ষিত। 
+    <div style="margin-top:12px;">
+        <a href="terms.html">শর্তাবলী</a> | 
+        <a href="contact.html">যোগাযোগ</a> | 
+        <a href="index.html">হোম</a>
+    </div>
+</footer>
+
+<script>
+document.getElementById('year').innerText = new Date().getFullYear();
+document.getElementById('date').innerText = new Date().toLocaleDateString('bn-BD', {year:'numeric', month:'long', day:'numeric'});
+</script>
+
+</body>
+</html>
