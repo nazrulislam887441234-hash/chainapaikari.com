@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অর্ডার ট্র্যাক করুন - chainapaikari</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#00c8ff;--accent:#00ff88;--danger:#ef4444;--warning:#f59e0b;--info:#6366f1;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri';}
+body{background:#f0f9ff;padding:20px;}
+.container{max-width:700px;margin:40px auto;}
+.card{background:#fff;border-radius:20px;padding:30px;box-shadow:0 10px 40px rgba(0,200,255,.15);}
+h1{text-align:center;font-family:'Poppins';margin-bottom:25px;background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.search-box{display:flex;gap:10px;margin-bottom:30px;}
+.search-box input{flex:1;padding:16px;border:2px solid #e2e8f0;border-radius:15px;font-size:16px;}
+.search-box button{padding:16px 25px;background:linear-gradient(90deg,var(--primary),var(--accent));border:none;border-radius:15px;color:#fff;font-weight:700;cursor:pointer;}
+.result{display:none;}
+.order-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:2px solid #f1f5f9;flex-wrap:wrap;gap:10px;}
+.order-id{font-size:20px;font-weight:700;}
+.status-badge{padding:8px 15px;border-radius:10px;font-weight:700;color:#fff;font-size:14px;}
+
+/* Status Color */
+.status-নতুন{background:var(--primary);}
+.status-কনফার্ম{background:var(--info);}
+.status-শিপিং{background:var(--warning);}
+.status-ডেলিভারিড{background:var(--accent);}
+.status-ক্যানসেল{background:var(--danger);}
+
+.track-steps{display:flex;justify-content:space-between;margin:30px 0;position:relative;}
+.track-steps::before{content:'';position:absolute;top:20px;left:0;right:0;height:3px;background:#e2e8f0;z-index:1;}
+.step{text-align:center;position:relative;z-index:2;flex:1;}
+.step-icon{width:40px;height:40px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;color:#94a3b8;font-size:18px;}
+.step.active .step-icon{background:var(--accent);color:#fff;}
+.step.done .step-icon{background:var(--primary);color:#fff;}
+.step.cancel .step-icon{background:var(--danger);color:#fff;}
+.step p{font-size:12px;color:#64748b;font-weight:600;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px;}
+.info-item{background:#f0f9ff;padding:15px;border-radius:12px;}
+.info-item label{font-size:13px;color:#64748b;}
+.info-item p{font-weight:700;margin-top:4px;}
+.products-list{margin-top:20px;}
+.product-row{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #f1f5f9;}
+.product-row img{width:50px;height:50px;border-radius:8px;object-fit:cover;}
+.error-msg{text-align:center;color:var(--danger);padding:30px;font-weight:700;}
+.loading{text-align:center;padding:30px;color:var(--primary);}
+@media(max-width:600px){.info-grid{grid-template-columns:1fr;}.track-steps p{font-size:10px;}}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>🚚 অর্ডার ট্র্যাক করুন</h1>
+
+        <div class="search-box">
+            <input type="text" id="orderIdInput" placeholder="আপনার Order ID লিখুন: CP12345678">
+            <button onclick="trackOrder()"><i class="fa-solid fa-search"></i> ট্র্যাক</button>
+        </div>
+
+        <div id="loading" class="loading" style="display:none;">লোড হচ্ছে...</div>
+        <div id="errorMsg" class="error-msg" style="display:none;"></div>
+
+        <!-- Result -->
+        <div class="result" id="resultBox">
+            <div class="order-header">
+                <div class="order-id" id="orderIdShow"></div>
+                <div class="status-badge" id="statusBadge"></div>
+            </div>
+
+            <!-- Tracking Steps -->
+            <div class="track-steps" id="trackSteps"></div>
+
+            <!-- Info -->
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>নাম</label>
+                    <p id="customerName"></p>
+                </div>
+                <div class="info-item">
+                    <label>ফোন</label>
+                    <p id="customerPhone"></p>
+                </div>
+                <div class="info-item">
+                    <label>ঠিকানা</label>
+                    <p id="customerAddress"></p>
+                </div>
+                <div class="info-item">
+                    <label>মোট টাকা</label>
+                    <p id="totalAmount"></p>
+                </div>
+            </div>
+
+            <!-- Products -->
+            <h3 style="margin-top:25px;">অর্ডারকৃত পণ্য</h3>
+            <div class="products-list" id="productsList"></div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {apiKey:"AIzaSyA5q-gEWhHbBB_kn0ZDNPYXC2urpSbpPd8",authDomain:"chaina-paikari.firebaseapp.com",projectId:"chaina-paikari",storageBucket:"chaina-paikari.firebasestorage.app",messagingSenderId:"968909884753",appId:"1:968909884753:web:88ab6754c2edda39bb1770"};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// 6 টা স্টেপ
+const steps = [
+    {name: "নতুন", icon: "fa-solid fa-file"},
+    {name: "কনফার্ম", icon: "fa-solid fa-check-double"},
+    {name: "শিপিং", icon: "fa-solid fa-truck"},
+    {name: "ডেলিভারিড", icon: "fa-solid fa-box-open"},
+    {name: "ক্যানসেল", icon: "fa-solid fa-xmark"}
+];
+
+window.trackOrder = async () => {
+    const orderId = document.getElementById('orderIdInput').value.trim();
+    if(!orderId){ alert("Order ID দিন"); return; }
+
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('resultBox').style.display = 'none';
+    document.getElementById('errorMsg').style.display = 'none';
+
+    const q = query(collection(db, "orders"), where("orderId", "==", orderId));
+    const snap = await getDocs(q);
+
+    document.getElementById('loading').style.display = 'none';
+
+    if(snap.empty){
+        document.getElementById('errorMsg').innerText = '❌ এই Order ID পাওয়া যায়নি';
+        document.getElementById('errorMsg').style.display = 'block';
+        return;
+    }
+
+    const order = snap.docs[0].data();
+    showResult(order);
+}
+
+function showResult(order){
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('orderIdShow').innerText = order.orderId;
+
+    const statusEl = document.getElementById('statusBadge');
+    statusEl.innerText = order.status;
+    statusEl.className = 'status-badge status-' + order.status;
+
+    // Tracking Steps
+    const stepsDiv = document.getElementById('trackSteps');
+    const currentStepIndex = steps.findIndex(s => s.name == order.status);
+
+    // যদি Cancel হয় তাহলে সব লাল
+    let stepsHTML = '';
+    if(order.status == 'ক্যানসেল'){
+        stepsHTML = steps.map((s, i) => `
+            <div class="step cancel">
+                <div class="step-icon"><i class="${s.icon}"></i></div>
+                <p>${s.name}</p>
+            </div>
+        `).join('');
+    } else {
+        stepsHTML = steps.map((s, i) => `
+            <div class="step ${i < currentStepIndex? 'done' : ''} ${i == currentStepIndex? 'active' : ''}">
+                <div class="step-icon"><i class="${s.icon}"></i></div>
+                <p>${s.name}</p>
+            </div>
+        `).join('');
+    }
+    stepsDiv.innerHTML = stepsHTML;
+
+    // Info
+    document.getElementById('customerName').innerText = order.name || '';
+    document.getElementById('customerPhone').innerText = order.phone || '';
+    document.getElementById('customerAddress').innerText = `${order.address || ''}, ${order.thana || ''}, ${order.district || ''}`;
+    document.getElementById('totalAmount').innerText = (order.total || 0) + ' ৳';
+
+    // Products
+    const productsDiv = document.getElementById('productsList');
+    productsDiv.innerHTML = order.items.map(item => `
+        <div class="product-row">
+            <img src="${item.images?.[0] || item.image}">
+            <div>
+                <h4>${item.name}</h4>
+                <p>${item.price || item.currentPrice} ৳ × ${item.qty}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+// URL এ?id=CP123 থাকলে অটো সার্চ
+const urlParams = new URLSearchParams(window.location.search);
+const idFromUrl = urlParams.get('id');
+if(idFromUrl){
+    document.getElementById('orderIdInput').value = idFromUrl;
+    trackOrder();
+}
+</script>
+</body>
+</html>
