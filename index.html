@@ -1,394 +1,412 @@
-<!DOCTYPE html>
-<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>chainapaikari.com - শীঘ্রই আসছে</title>
-<meta name="description" content="chainapaikari.com - চায়না পাইকারি গ্যাজেট, কাপড়, ইলেকট্রনিক্স। সবচেয়ে কম দামে সব ধরনের প্রোডাক্ট।">
 
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<!-- Primary Meta Tags -->
+<title>Chaina Paikari-কম দামে চায়না পণ্য</title>
+<meta name="title" content="chainapaikari | বাংলাদেশের সেরা হোলসেল মার্কেট | পাইকারি দামে পণ্য">
+<meta name="description" content="chainapaikari থেকে পাইকারি দামে কিনুন ইলেকট্রনিক্স, গ্যাজেট, কসমেটিকস ও গিফট আইটেম। সারা বাংলাদেশে ক্যাশ অন ডেলিভারি। অর্ডার করতে আজই ভিজিট করুন।">
+<meta name="keywords" content="chainapaikari, পাইকারি মার্কেট, হোলসেল, wholesale bangladesh, পাইকারি পণ্য, অনলাইন শপিং, cash on delivery">
+<meta name="author" content="chainapaikari">
+<meta name="robots" content="index, follow">
+<meta name="language" content="Bengali">
+<meta name="revisit-after" content="7 days">
 
+<!-- Canonical URL -->
+<link rel="canonical" href="https://chainapaikari.com/">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chainapaikari.com/">
+<meta property="og:title" content="chainapaikari | বাংলাদেশের সেরা হোলসেল মার্কেট">
+<meta property="og:description" content="পাইকারি দামে সেরা মানের পণ্য। সারা বাংলাদেশে ক্যাশ অন ডেলিভারি।">
+<meta property="og:image" content="https://chainapaikari.com/og-image.jpg"> <!-- আপনার লোগো/ব্যানার লিংক বসান -->
+<meta property="og:site_name" content="chainapaikari">
+<meta property="og:locale" content="bn_BD">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://chainapaikari.com/">
+<meta property="twitter:title" content="chainapaikari | বাংলাদেশের সেরা হোলসেল মার্কেট">
+<meta property="twitter:description" content="পাইকারি দামে সেরা মানের পণ্য। সারা বাংলাদেশে ক্যাশ অন ডেলিভারি।">
+<meta property="twitter:image" content="https://chainapaikari.com/og-image.jpg">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#2563eb">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Schema Markup for Organization + Website -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "chainapaikari",
+  "url": "https://chainapaikari.com",
+  "logo": "https://chainapaikari.com/logo.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+8801723109294",
+    "contactType": "customer service",
+    "availableLanguage": ["Bengali", "English"]
+  },
+  "sameAs": [
+    "https://www.facebook.com/yourpage", 
+    "https://wa.me/8801723109294"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "chainapaikari",
+  "url": "https://chainapaikari.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://chainapaikari.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 <style>
-:root{
-    --primary: #00f2ff;
-    --secondary: #7c3aed;
-    --accent: #ff00e5;
-}
+:root{--primary:#2563eb;--accent:#fbbf24;--gradient:linear-gradient(135deg,#2563eb,#1e40af);}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri';}
+body{background:#f8fafc;color:#1e293b;}
+a{text-decoration:none;color:inherit;}
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Hind Siliguri',sans-serif;
-}
+/* Header */
+.header{position:sticky;top:0;background:#fff;z-index:1000;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+.menu-btn{font-size:24px;cursor:pointer;color:#334155;}
+.logo{display:flex;align-items:center;gap:5px;font-family:'Poppins';font-size:20px;font-weight:900;}
+.logo .my{background:var(--primary);color:#fff;padding:4px 8px;border-radius:8px;}
+.logo .book{color:#1e293b;}
+.header-icons{position:relative;font-size:22px;color:#334155;}
+.cart-count{position:absolute;top:-8px;right:-8px;background:#ef4444;color:#fff;font-size:11px;font-weight:800;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
 
-body{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    background:#0a0f1e;
-    overflow:hidden;
-    position:relative;
-}
+/* Sidebar */
+.sidebar{position:fixed;top:0;left:-280px;width:280px;height:100%;background:#fff;box-shadow:0 0 30px rgba(0,0,0,.2);z-index:2000;transition:.4s;padding-top:20px;}
+.sidebar.active{left:0;}
+.sidebar-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:1999;display:none;}
+.sidebar-overlay.active{display:block;}
+.sidebar-header{padding:0 20px 15px;border-bottom:1px solid #f1f5f9;}
+.sidebar-header h3{font-size:20px;font-weight:800;}
+.sidebar a{display:flex;align-items:center;gap:12px;padding:14px 20px;font-weight:700;color:#334155;transition:.3s;}
+.sidebar a:hover{background:#eff6ff;color:var(--primary);}
 
-/* Animated Gradient Background */
-.bg-gradient{
-    position:absolute;
+/* Search */
+.search-box{max-width:981px;margin:15px auto;padding:0 16px;}
+.search-box .box{position:relative;}
+.search-box input{width:100%;padding:14px 45px 14px 18px;border:1px solid #e2e8f0;border-radius:15px;font-size:15px;background:#fff;}
+.search-box i{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:18px;}
+
+/* Banner Slider - 981x363 from Firebase */
+.slider{max-width:981px;margin:0 auto 30px;padding:0 16px;position:relative;border-radius:20px;overflow:hidden;}
+.slides{display:flex;transition:transform .7s ease;}
+.slide{min-width:100%;position:relative;}
+.slide img{
     width:100%;
-    height:100%;
-    background: radial-gradient(ellipse at top, #1e3a8a 0%, #0a0f1e 70%);
-    z-index:0;
-}
-
-.bg-gradient::before,
-.bg-gradient::after{
-    content:"";
-    position:absolute;
-    width:500px;
-    height:500px;
-    border-radius:50%;
-    filter:blur(140px);
-    animation:float 15s infinite ease-in-out alternate;
-}
-
-.bg-gradient::before{
-    background:var(--primary);
-    top:10%;
-    left:5%;
-}
-
-.bg-gradient::after{
-    background:var(--secondary);
-    bottom:10%;
-    right:5%;
-    animation-delay:2s;
-}
-
-@keyframes float{
-    0%{transform:translate(0,0) scale(1);}
-    100%{transform:translate(60px,-40px) scale(1.2);}
-}
-
-/* Grid Pattern */
-.grid{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background-image: 
-        linear-gradient(rgba(0,242,255,.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,242,255,.08) 1px, transparent 1px);
-    background-size:50px 50px;
-    z-index:1;
-    animation:gridMove 20s linear infinite;
-}
-
-@keyframes gridMove{
-    from{background-position:0 0;}
-    to{background-position:50px 50px;}
-}
-
-.card{
-    position:relative;
-    z-index:2;
-    width:92%;
-    max-width:650px;
-    padding:50px 40px;
-    text-align:center;
-    background:rgba(15,23,42,.45);
-    backdrop-filter:blur(25px) saturate(180%);
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:30px;
-    box-shadow:0 0 60px rgba(0,242,255,.25), 0 25px 80px rgba(0,0,0,.5);
-    color:#fff;
-    animation:cardIn 1s cubic-bezier(.22,1,.36,1);
-}
-
-@keyframes cardIn{
-    from{opacity:0; transform:translateY(30px) scale(.95);}
-    to{opacity:1; transform:translateY(0) scale(1);}
-}
-
-.logo{
-    width:110px;
-    height:110px;
-    margin:auto;
-    border-radius:50%;
-    background: conic-gradient(from 180deg, var(--primary), var(--secondary), var(--accent), var(--primary));
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:48px;
-    box-shadow:0 0 40px rgba(0,242,255,.6);
-    animation:logoSpin 4s linear infinite;
-    position:relative;
-}
-
-.logo::before{
-    content:"";
-    position:absolute;
-    inset:4px;
-    background:#0a0f1e;
-    border-radius:50%;
-}
-
-.logo span{
-    position:relative;
-    z-index:1;
-}
-
-@keyframes logoSpin{
-    100%{transform:rotate(360deg);}
-}
-
-.badge{
-    display:inline-block;
-    margin-top:25px;
-    padding:8px 20px;
-    background:linear-gradient(90deg, rgba(0,242,255,.15), rgba(124,58,237,.15));
-    border:1px solid rgba(0,242,255,.3);
-    border-radius:50px;
-    font-size:14px;
-    font-weight:600;
-    color:var(--primary);
-    letter-spacing:1px;
-}
-
-h1{
-    margin-top:15px;
-    font-size:40px;
-    font-family:'Poppins',sans-serif;
-    font-weight:700;
-    background: linear-gradient(90deg, #fff, var(--primary), #fff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    background-size:200% auto;
-    animation:shine 3s linear infinite;
-}
-
-@keyframes shine{
-    to{background-position:200% center;}
-}
-
-.domain{
-    color:var(--primary);
-    font-weight:700;
-    margin:12px 0 25px;
-    font-size:26px;
-    word-break:break-word;
-    text-shadow:0 0 15px rgba(0,242,255,.5);
-}
-
-.message{
-    font-size:19px;
-    line-height:1.9;
-    opacity:.9;
-    margin-bottom:30px;
-}
-
-.message b{
-    color:var(--primary);
-}
-
-/* Progress Bar */
-.progress-wrap{
-    margin:35px 0;
-}
-
-.progress-label{
-    display:flex;
-    justify-content:space-between;
-    font-size:14px;
-    opacity:.8;
-    margin-bottom:10px;
-}
-
-.progress{
-    width:100%;
-    height:12px;
-    background:rgba(255,255,255,.1);
+    height:auto;
+    aspect-ratio:981/363;
+    object-fit:cover;
+    display:block;
     border-radius:20px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.15);
 }
+.slide-content{position:absolute;bottom:0;left:0;right:0;padding:15px;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;border-radius:0 0 20px 20px;}
+.slide-content h2{font-size:18px;font-weight:900;color:var(--accent);margin-bottom:4px;}
+.slide-content p{font-size:12px;margin-bottom:8px;}
+.slide-btn{background:var(--accent);color:#1e293b;padding:8px 15px;border-radius:8px;font-weight:800;font-size:12px;display:inline-block;}
+.dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:.4s;}
+.dot.active{background:#fff;width:20px;border-radius:10px;}
 
-.progress-bar{
-    height:100%;
-    width:65%;
-    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-    border-radius:20px;
-    box-shadow:0 0 20px var(--primary);
-    animation:progressLoad 2.5s ease-in-out infinite;
-}
+/* Section */
+.section{max-width:981px;margin:0 auto 30px;padding:0 16px;}
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.section-header h2{font-size:18px;font-weight:800;}
+.section-header a{color:var(--primary);font-size:14px;font-weight:700;}
 
-@keyframes progressLoad{
-    0%,100%{width:65%;}
-    50%{width:85%;}
-}
+/* Categories - Circle */
+.categories{display:flex;gap:15px;overflow-x:auto;padding-bottom:10px;}
+.categories::-webkit-scrollbar{display:none;}
+.cat-card{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:75px;}
+.cat-icon{width:65px;height:65px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#dbeafe;overflow:hidden;}
+.cat-icon img{width:100%;height:100%;object-fit:cover;}
+.cat-card h4{font-size:12px;font-weight:700;text-align:center;}
 
-/* Notify Form */
-.notify{
-    margin-top:30px;
-}
-
-.notify p{
-    font-size:15px;
-    margin-bottom:15px;
-    opacity:.85;
-}
-
-.input-group{
-    display:flex;
-    gap:10px;
-    max-width:420px;
-    margin:auto;
-}
-
-.input-group input{
-    flex:1;
-    padding:14px 20px;
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,.2);
-    background:rgba(255,255,255,.08);
-    color:#fff;
-    font-size:16px;
-    outline:none;
-    transition:.3s;
-}
-
-.input-group input:focus{
-    border-color:var(--primary);
-    box-shadow:0 0 15px rgba(0,242,255,.3);
-}
-
-.input-group button{
-    padding:14px 28px;
-    border:none;
-    border-radius:12px;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    color:#0a0f1e;
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.input-group button:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(0,242,255,.4);
-}
-
-/* Social */
-.social{
-    margin-top:30px;
-    display:flex;
-    justify-content:center;
-    gap:18px;
-}
-
-.social a{
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.15);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:20px;
-    text-decoration:none;
-    color:#fff;
-    transition:.3s;
-}
-
-.social a:hover{
-    background:var(--primary);
-    color:#0a0f1e;
-    transform:translateY(-4px);
-    box-shadow:0 8px 20px rgba(0,242,255,.4);
-}
-
-.footer{
-    margin-top:35px;
-    font-size:14px;
-    opacity:.7;
-}
-
-@media(max-width:600px){
-    .card{padding:35px 25px;}
-    h1{font-size:30px;}
-    .domain{font-size:20px;}
-    .input-group{flex-direction:column;}
-}
+/* Products - Card with Rating */
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+@media(min-width:768px){.products{grid-template-columns:repeat(4,1fr);}}
+.product-card{background:#fff;border-radius:15px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.product-card img{width:100%;aspect-ratio:1/1;border-radius:12px;object-fit:cover;margin-bottom:8px;}
+.product-card h4{font-size:13px;font-weight:700;height:36px;overflow:hidden;line-height:1.4;margin-bottom:6px;}
+.product-card .price{color:var(--primary);font-weight:900;font-size:15px;}
+/* Footer */
+footer{background:#fff;padding:30px 16px;margin-top:40px;border-top:1px solid #e2e8f0;}
+.footer-grid{max-width:981px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:25px;}
+footer .logo{margin-bottom:10px;font-size:18px;}
+footer p{font-size:13px;color:#64748b;line-height:1.6;}
+footer h3{font-size:15px;font-weight:800;margin-bottom:12px;}
+footer a{display:block;font-size:13px;color:#64748b;margin-bottom:8px;}
+.contact-item{display:flex;gap:8px;align-items:center;font-size:13px;color:#64748b;margin-bottom:8px;}
+.whatsapp-btn{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:10px 18px;border-radius:10px;font-weight:800;margin-top:10px;font-size:13px;}
+.social{display:flex;gap:10px;margin-top:10px;}
+.social a{width:35px;height:35px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;color:var(--primary);}
+.copy{text-align:center;padding-top:20px;margin-top:20px;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8;}
 </style>
 </head>
 
-<body>
-
-<div class="bg-gradient"></div>
-<div class="grid"></div>
-
-<div class="card">
-
-<div class="logo"><span>🌐</span></div>
-
-<div class="badge">PREMIUM WHOLESALE PLATFORM</div>
-
-<h1>Coming Soon</h1>
-
-<div class="domain">
-chainapaikari.com
+<!-- Header -->
+<div class="header">
+    <i class="fa-solid fa-bars menu-btn" onclick="toggleSidebar()"></i>
+    <div class="logo"><span class="my">chaina</span><span class="book">paikari</span></div>
+    <a href="cart.html" class="header-icons">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="cart-count">0</span>
+    </a>
 </div>
 
-<div class="message">
-আপনার <b>chainapaikari.com</b> ওয়েবসাইট<br>
-চায়না পাইকারি গ্যাজেট, কাপড় ও ইলেকট্রনিক্স নিয়ে<br>
-উন্নত ফিচার সহ ডেভেলপমেন্টে রয়েছে।
+<!-- Sidebar -->
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header"><h3>মেনু</h3></div>
+    <a href="index.html"><i class="fa-solid fa-house"></i> হোম</a>
+    <a href="products.html"><i class="fa-solid fa-bag-shopping"></i> সকল পণ্য</a>
+    <a href="track.html"><i class="fa-solid fa-truck-fast"></i> অর্ডার ট্র্যাক করুন</a>
+    <a href="contact.html"><i class="fa-solid fa-phone"></i> যোগাযোগ</a>
+    <a href="terms.html"><i class="fa-solid fa-file-contract"></i> Terms and Condition</a>
+    <a href="privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a>
 </div>
 
-<div class="progress-wrap">
-    <div class="progress-label">
-        <span>Development Progress</span>
-        <span>65%</span>
-    </div>
-    <div class="progress">
-        <div class="progress-bar"></div>
+<!-- Search -->
+<div class="search-box">
+    <div class="box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="catSearchInput" placeholder="আপনার প্রয়োজনীয় পণ্য খুঁজুন...">
     </div>
 </div>
 
-<div class="notify">
-    <p>🚀 লঞ্চের আপডেট সবার আগে পেতে ইমেইল দিন</p>
-    <div class="input-group">
-        <input type="email" placeholder="আপনার ইমেইল লিখুন">
-        <button>Notify Me</button>
+<!-- Banner Slider - Firebase 981x363 -->
+<div class="slider">
+    <div class="slides" id="bannerSlides"></div>
+    <div class="dots" id="bannerDots"></div>
+</div>
+
+<!-- Categories -->
+<div class="section">
+    <div class="section-header">
+        <h2>ক্যাটাগরি সমূহ</h2>
+        <a href="categories.html">সব দেখুন</a>
     </div>
+    <div class="categories" id="categoryList"></div>
 </div>
 
-<div class="social">
-    <a href="#">f</a>
-    <a href="#">in</a>
-    <a href="#">ig</a>
-    <a href="#">yt</a>
+<!-- Popular Products -->
+<div class="section">
+    <div class="section-header">
+        <h2>জনপ্রিয় পণ্য</h2>
+        <a href="products.html">সব দেখুন</a>
+    </div>
+    <div class="products" id="popularProducts"></div>
 </div>
 
-<div class="footer">
-    © 2026 chainapaikari.com | আমরা খুব শীঘ্রই নতুন ডিজাইন ও প্রিমিয়াম সার্ভিস নিয়ে ফিরছি
-</div>
+<!-- Footer with Firebase Contact -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="logo"><span class="my">chaina</span><span class="book">paikari</span></div>
+            <p>আমরা দিচ্ছি সেরা মানের পণ্য ও নির্ভরযোগ্য সেবা। আপনার বিশ্বাসই আমাদের অর্জন।</p>
+        </div>
+        <div>
+            <h3>দ্রুত লিংক</h3>
+            <a href="contact.html">যোগাযোগ করুন</a>
+            <a href="terms.html">টার্মস এন্ড কন্ডিশন</a>
+            <a href="privacy.html">গোপনীয়তা নীতি</a>
+        </div>
+        <div>
+            <h3>যোগাযোগ</h3>
+            <div id="contactList"></div>
+            <a href="#" id="whatsappLink" class="whatsapp-btn" target="_blank"><i class="fa-brands fa-whatsapp"></i> Live Chat</a>
+            <h3 style="margin-top:15px;">আমাদের সাথে থাকুন</h3>
+            <div class="social" id="socialList"></div>
+        </div>
+    </div>
+    <div class="copy">© 2026 chainapaikari. সর্বস্বত্ব সংরক্ষিত।</div>
+</footer>
 
-</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, orderBy, query, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<script>
-// Simple email validation
-document.querySelector('.input-group button').addEventListener('click', function(){
-    const email = document.querySelector('.input-group input').value;
-    if(email.includes('@')){
-        alert('ধন্যবাদ! লঞ্চের সময় আপনাকে জানিয়ে দেওয়া হবে।');
-        document.querySelector('.input-group input').value = '';
-    }else{
-        alert('সঠিক ইমেইল দিন।');
+const firebaseConfig = {apiKey:"AIzaSyA5q-gEWhHbBB_kn0ZDNPYXC2urpSbpPd8",authDomain:"chaina-paikari.firebaseapp.com",projectId:"chaina-paikari",storageBucket:"chaina-paikari.firebasestorage.app",messagingSenderId:"968909884753",appId:"1:968909884753:web:88ab6754c2edda39bb1770"};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let slideIndex = 0;
+let slideInterval;
+let allCategories = [];
+
+window.toggleSidebar = () => {
+    document.getElementById('sidebar').classList.toggle('active');
+    document.querySelector('.sidebar-overlay').classList.toggle('active');
+}
+
+// 1. Load Banner from Firebase banners collection - 981x363
+async function loadBanners(){
+    const q = query(collection(db, "banners"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    const slides = document.getElementById('bannerSlides');
+    const dots = document.getElementById('bannerDots');
+    let i = 0;
+    if(snap.empty) {
+        slides.innerHTML = `<div class="slide"><img src="https://via.placeholder.com/981x363/2563eb/fff?text=Banner+Upload+Kore+DIN" alt="Banner"></div>`;
+        return;
     }
-});
-</script>
+    snap.forEach(doc => {
+    const data = doc.data();
 
+    slides.innerHTML += `
+    <a href="${data.link || 'products.html'}" class="slide">
+        <img src="${data.url}" alt="Banner">
+    </a>`;
+
+    dots.innerHTML += `<div class="dot" onclick="goToSlide(${i})"></div>`;
+    i++;
+});
+    showSlide(0);
+    if(i>1) slideInterval = setInterval(()=>{nextSlide()}, 3000);
+}
+
+window.nextSlide = () => {
+    slideIndex++;
+    if(slideIndex >= document.querySelectorAll('.slide').length) slideIndex = 0;
+    showSlide(slideIndex);
+}
+window.goToSlide = (n) => {
+    slideIndex = n;
+    showSlide(slideIndex);
+    clearInterval(slideInterval);
+    slideInterval = setInterval(()=>{nextSlide()}, 3000);
+}
+function showSlide(n){
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    if(!slides.length) return;
+    document.getElementById('bannerSlides').style.transform = `translateX(-${n*100}%)`;
+    dots.forEach((d,i)=>d.classList.toggle('active', i==n));
+}
+
+// 2. Load Categories with Search
+async function loadCategories(){
+    const snap = await getDocs(collection(db, "categories"));
+    allCategories = snap.docs.map(doc => ({id: doc.id,...doc.data()}));
+    renderCategories(allCategories);
+}
+function renderCategories(cats){
+    const list = document.getElementById('categoryList');
+    list.innerHTML = '';
+
+    cats.forEach(data => {
+        const slug = data.slug || data.id;
+
+        list.innerHTML += `
+        <a href="category.html?slug=${slug}" class="cat-card">
+            <div class="cat-icon">
+                <img src="${data.image}" alt="${data.name}">
+            </div>
+            <h4>${data.name}</h4>
+        </a>`;
+    });
+}
+document.getElementById('catSearchInput').addEventListener('input', (e) => {
+    const keyword = e.target.value.toLowerCase();
+    const filtered = allCategories.filter(c => c.name.toLowerCase().includes(keyword));
+    renderCategories(filtered);
+});
+
+// 3. Load Popular Products
+async function loadPopularProducts(){
+    const q = query(
+        collection(db, "products"),
+        orderBy("createdAt", "desc"),
+        limit(8)
+    );
+
+    const snap = await getDocs(q);
+    const list = document.getElementById('popularProducts');
+    list.innerHTML = "";
+
+    snap.forEach(doc => {
+        const data = doc.data();
+
+        const current = Number(data.currentPrice || 0);
+        const old = Number(data.oldPrice || 0);
+
+        let discount = "";
+        if(old > current){
+            discount = Math.round(((old - current) / old) * 100);
+        }
+
+        list.innerHTML += `
+        <a href="product.html?id=${doc.id}" class="product-card">
+            <img src="${data.images?.[0] || data.image}" alt="${data.name}">
+            <h4>${data.name}</h4>
+
+            <div class="price">৳ ${current}</div>
+
+            ${
+                old > current
+                ? `<div style="font-size:12px;color:#94a3b8;text-decoration:line-through;">
+                        ৳ ${old}
+                   </div>
+                   <div style="color:#ef4444;font-size:12px;font-weight:700;">
+                        ${discount}% OFF
+                   </div>`
+                : ""
+            }
+        </a>`;
+    });
+}
+// 4. Load Contact + WhatsApp from Firebase
+async function loadContact(){
+    const snap = await getDocs(collection(db, "contactLinks"));
+    const list = document.getElementById('contactList');
+    let whatsapp = '';
+    snap.forEach(doc => {
+        const d = doc.data();
+        list.innerHTML += `
+        <div class="contact-item"><i class="fa-solid fa-phone"></i> ${d.phone}</div>
+        <div class="contact-item"><i class="fa-solid fa-envelope"></i> ${d.email}</div>
+        <div class="contact-item"><i class="fa-solid fa-globe"></i> ${d.website || 'www.chainapaikari.com'}</div>`;
+        if(d.liveSupport && d.whatsapp){
+            whatsapp = `https://wa.me/${d.whatsapp}`;
+        }
+    });
+    document.getElementById('whatsappLink').href = whatsapp || '#';
+}
+
+// 5. Load Social
+async function loadSocial(){
+    const snap = await getDocs(collection(db, "socialLinks"));
+    const list = document.getElementById('socialList');
+    snap.forEach(doc => {
+        const d = doc.data();
+        list.innerHTML += `<a href="${d.url}" target="_blank"><i class="${d.icon}"></i></a>`;
+    });
+}
+
+loadBanners();
+loadCategories();
+loadPopularProducts();
+loadContact();
+loadSocial();
+</script>
 </body>
 </html>
