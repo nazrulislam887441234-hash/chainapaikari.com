@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>আমার কার্ট</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{background:#f0f9ff;font-family:'Hind Siliguri';padding:20px;}
+.card{max-width:900px;margin:0 auto;background:#fff;border-radius:20px;padding:25px;box-shadow:0 10px 40px rgba(0,200,255,.15);}
+h2{margin-bottom:20px;}
+.cart-item{display:flex;gap:15px;border-bottom:1px solid #e2e8f0;padding:15px 0;}
+.cart-item img{width:80px;height:80px;object-fit:cover;border-radius:10px;}
+.info{flex:1;}
+.info h4{margin-bottom:5px;}
+.price{font-weight:700;color:#00ff88;}
+.qty{display:flex;gap:8px;align-items:center;margin-top:8px;}
+.qty button{width:30px;height:30px;border:none;border-radius:8px;background:#e0f7ff;cursor:pointer;font-weight:700;}
+.delete{color:#ef4444;background:none;border:none;cursor:pointer;}
+.checkout-btn{width:100%;padding:16px;margin-top:20px;background:linear-gradient(90deg,#00c8ff,#00ff88);border:none;border-radius:15px;color:#fff;font-weight:700;font-size:17px;cursor:pointer;}
+.empty{text-align:center;color:#94a3b8;padding:40px;}
+</style>
+</head>
+<body>
+<div class="card">
+    <h2>🛒 আমার কার্ট</h2>
+    <div id="cartList"></div>
+    <h3 style="text-align:right;margin-top:15px;">Total: <span id="total">0 ৳</span></h3>
+    <button class="checkout-btn" onclick="goCheckout()">Checkout করুন</button>
+</div>
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+function renderCart(){
+    const list = document.getElementById('cartList');
+    if(cart.length == 0){ list.innerHTML = "<p class='empty'>আপনার কার্ট খালি</p>"; document.getElementById('total').innerText = '0 ৳'; return; }
+    list.innerHTML = ''; let total = 0;
+    cart.forEach((item, i) => {
+        total += item.price * item.qty;
+        list.innerHTML += `
+        <div class="cart-item">
+          <img src="${item.images?.[0] || item.image}">
+            <div class="info">
+                <h4>${item.name}</h4>
+                <p class="price">${item.price} ৳</p>
+                <div class="qty">
+                    <button onclick="updateQty(${i}, -1)">-</button>
+                    <span>${item.qty}</span>
+                    <button onclick="updateQty(${i}, 1)">+</button>
+                </div>
+            </div>
+            <button class="delete" onclick="removeItem(${i})">✕</button>
+        </div>`;
+    });
+    document.getElementById('total').innerText = total + ' ৳';
+}
+function updateQty(i, change){ cart[i].qty += change; if(cart[i].qty < 1) cart[i].qty = 1; localStorage.setItem('cart', JSON.stringify(cart)); renderCart(); }
+function removeItem(i){ cart.splice(i,1); localStorage.setItem('cart', JSON.stringify(cart)); renderCart(); }
+function goCheckout(){ if(cart.length == 0){ alert("কার্ট খালি"); return; } window.location.href = "checkout.html"; }
+renderCart();
+</script>
+</body>
+</html>
