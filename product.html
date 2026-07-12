@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>সকল পণ্য - chainapaikari</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#00c8ff;--accent:#00ff88;--danger:#ef4444;--text:#0a0f1e;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;}
+body{background:#f0f9ff;min-height:100vh;padding-bottom:50px;}
+.container{max-width:1400px;margin:0 auto;padding:20px;}
+
+/* Header */
+.header-box{background:#fff;padding:25px;border-radius:25px;margin-bottom:20px;box-shadow:0 10px 40px rgba(0,200,255,.1);}
+.header-title{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;}
+.header-title i{font-size:32px;color:var(--primary);}
+.header-title h1{font-family:'Poppins';font-size:26px;background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.search-box{position:relative;}
+.search-box input{width:100%;padding:16px 50px 16px 20px;border:2px solid #e2e8f0;border-radius:15px;font-size:16px;background:#f8fafc;}
+.search-box i{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:18px;}
+/* Product Grid */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr); /* মোবাইলে ২টা */
+    gap:15px;
+}
+
+@media (min-width:768px){
+    .grid{
+        grid-template-columns:repeat(4, 1fr); /* ট্যাবলেটে ৪টা */
+    }
+}
+
+@media (min-width:1200px){
+    .grid{
+        grid-template-columns:repeat(6, 1fr); /* ডেস্কটপে ৬টা */
+    }
+}
+
+@media (min-width:1600px){
+    .grid{
+        grid-template-columns:repeat(7, 1fr); /* বড় স্ক্রিনে ৭টা */
+    }
+}
+.card{
+    background:#fff;
+    border-radius:20px;
+    padding:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.05);
+    transition:.3s;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    min-width:0;
+}
+
+.card img{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    border-radius:15px;
+    margin-bottom:10px;
+}
+.card:hover{transform:translateY(-5px);}
+.card{
+    width:100%;
+    min-width:0;
+}
+.card h3{font-size:15px;font-weight:700;color:var(--text);height:40px;overflow:hidden;line-height:1.4;margin-bottom:8px;}
+.current{font-size:18px;font-weight:700;color:var(--accent);margin-bottom:3px;}
+.old{font-size:13px;color:#94a3b8;text-decoration:line-through;margin-bottom:5px;}
+.discount-badge{font-size:12px;background:var(--danger);color:#fff;padding:4px 8px;border-radius:8px;font-weight:700;display:inline-block;margin-bottom:5px;width:fit-content;}
+.save-text{font-size:12px;color:var(--danger);font-weight:600;margin-bottom:8px;}
+.btn-cart{width:100%;padding:12px;margin-top:auto;background:linear-gradient(90deg,var(--primary),var(--accent));border:none;border-radius:12px;color:#fff;font-weight:700;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px;}
+
+/* Load More */
+.load-more{text-align:center;margin:30px 0;}
+.load-more button{padding:16px 40px;background:#cbd5e1;border:none;border-radius:15px;color:#fff;font-weight:700;font-size:16px;cursor:pointer;transition:.3s;}
+.load-more button.active{background:linear-gradient(90deg,var(--primary),var(--accent));}
+.load-more button:disabled{cursor:not-allowed;}
+.loading{text-align:center;padding:30px;color:var(--primary);font-weight:700;}
+
+/* Popup */
+.popup{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:999;animation:fadeIn .3s;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.popup-box{background:#fff;padding:30px;border-radius:20px;text-align:center;max-width:350px;width:90%;transform:scale(.9);animation:scaleUp .3s forwards;}
+@keyframes scaleUp{to{transform:scale(1);}}
+.popup-icon{font-size:50px;margin-bottom:15px;color:var(--accent);}
+.popup-box h3{margin-bottom:10px;font-size:20px;}
+.popup-box p{color:#64748b;margin-bottom:20px;}
+.popup-btn{padding:12px 25px;background:linear-gradient(90deg,var(--primary),var(--accent));border:none;border-radius:12px;color:#fff;font-weight:700;cursor:pointer;font-size:16px;}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-box">
+        <div class="header-title">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <h1>সকল পণ্য</h1>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="পণ্যের নাম লিখে খুঁজুন...">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+    </div>
+
+    <div class="grid" id="productGrid"></div>
+    
+    <div class="loading" id="loading">লোড হচ্ছে...</div>
+    
+    <div class="load-more" id="loadMoreBox" style="display:none;">
+        <button id="loadMoreBtn" onclick="loadMore()">আরও দেখুন +</button>
+    </div>
+</div>
+
+<!-- Popup -->
+<div class="popup" id="popup">
+    <div class="popup-box">
+        <div class="popup-icon">✅</div>
+        <h3 id="popupTitle">সফল!</h3>
+        <p id="popupMsg">কার্টে যোগ হয়েছে</p>
+        <button class="popup-btn" onclick="closePopup()">ঠিক আছে</button>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {apiKey:"AIzaSyA5q-gEWhHbBB_kn0ZDNPYXC2urpSbpPd8",authDomain:"chaina-paikari.firebaseapp.com",projectId:"chaina-paikari",storageBucket:"chaina-paikari.firebasestorage.app",messagingSenderId:"968909884753",appId:"1:968909884753:web:88ab6754c2edda39bb1770"};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let allProducts = [];
+let displayedProducts = [];
+let currentIndex = 0;
+const PER_PAGE = 20;
+
+const grid = document.getElementById('productGrid');
+const loading = document.getElementById('loading');
+const loadMoreBox = document.getElementById('loadMoreBox');
+const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+// সব পণ্য Load
+async function loadAllProducts(){
+    const snap = await getDocs(query(collection(db, "products"), orderBy("createdAt", "desc")));
+    allProducts = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
+    allProducts.sort(() => Math.random() - 0.5); // Random
+    
+    displayedProducts = [...allProducts];
+    loading.style.display = 'none';
+    loadMoreBox.style.display = 'block';
+    loadMore();
+}
+
+// কার্ড বানানো - আপনার ডিজাইন অনুযায়ী
+function createCard(product){
+    const current = Number(product.currentPrice || 0);
+    const old = Number(product.oldPrice || 0);
+    const discountAmount = old > current ? old - current : 0;
+    const discountPercent = old > current ? Math.round((discountAmount / old) * 100) : 0;
+    
+    return `
+    <div class="card" onclick="window.location='product.html?id=${product.id}'">
+        <img src="${product.images?.[0] || product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <div class="current">${current} ৳</div>
+        ${old > current ? `<div class="old">${old} ৳</div>` : ''}
+        ${discountPercent > 0 ? `<div class="discount-badge">${discountPercent}% OFF</div>` : ''}
+        ${discountAmount > 0 ? `<div class="save-text">আপনি সাশ্রয় করছেন: ${discountAmount} ৳</div>` : ''}
+        <button class="btn-cart" onclick="event.stopPropagation(); addToCart('${product.id}')">
+            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+        </button>
+    </div>`;
+}
+
+// 20 টা করে Load
+window.loadMore = () => {
+    loadMoreBtn.disabled = true;
+    loadMoreBtn.innerText = "লোড হচ্ছে...";
+    loadMoreBtn.classList.remove('active');
+    
+    setTimeout(() => {
+        const nextProducts = displayedProducts.slice(currentIndex, currentIndex + PER_PAGE);
+        grid.innerHTML += nextProducts.map(createCard).join('');
+        currentIndex += PER_PAGE;
+        
+        if(currentIndex >= displayedProducts.length){
+            loadMoreBtn.innerText = "সব দেখা শেষ";
+            loadMoreBtn.disabled = true;
+        } else {
+            loadMoreBtn.innerText = "আরও দেখুন +";
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.classList.add('active');
+        }
+    }, 300);
+}
+
+// Search
+document.getElementById('searchInput').addEventListener('input', (e) => {
+    const keyword = e.target.value.toLowerCase();
+    grid.innerHTML = '';
+    currentIndex = 0;
+
+    if(keyword == ''){
+        displayedProducts = [...allProducts];
+    } else {
+        displayedProducts = allProducts.filter(p => {
+
+            const name = (p.name || "").toLowerCase();
+            const description = (p.description || "").toLowerCase();
+            const keywords = (p.keywords || []).join(" ").toLowerCase();
+
+            return (
+                name.includes(keyword) ||
+                description.includes(keyword) ||
+                keywords.includes(keyword)
+            );
+
+        });
+    }
+
+    displayedProducts.sort(() => Math.random() - 0.5);
+    loadMoreBtn.disabled = false;
+    loadMore();
+});
+// Add to Cart with Popup
+window.addToCart = (id) => {
+    const product = allProducts.find(p => p.id == id);
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let item = cart.find(i => i.id == id);
+    if(item){ item.qty += 1; } 
+    else { cart.push({...product, price: Number(product.currentPrice), qty: 1}); }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    showPopup("সফল!", `${product.name} কার্টে যোগ হয়েছে`);
+}
+
+function showPopup(title, msg){
+    document.getElementById('popupTitle').innerText = title;
+    document.getElementById('popupMsg').innerText = msg;
+    document.getElementById('popup').style.display = 'flex';
+}
+window.closePopup = () => document.getElementById('popup').style.display = 'none';
+
+loadAllProducts();
+</script>
+</body>
+</html>
